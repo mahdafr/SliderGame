@@ -122,16 +122,28 @@ public class BoardView extends View {
         numberPaint.setColor(Color.BLACK);
         numberPaint.setTextSize(100f);
     }
+    private int radius;
+    public void setRadius(int r) {
+        radius = r;
+    }
 
     //@modified Mahdokht Afravi on 03.29 W
     /** Draw all the spaces of the Board. */
     private void drawPlaces(Canvas canvas) {
-        int radius = 50;
         for( int i=0 ; i<boardSize ; i++) {
             for( int j=0 ; j<boardSize ; j++) {
-                float x = j*lineGap() + radius;
-                float y = i*lineGap() + radius;
-                canvas.drawText(board.at(i,j)+"",0,1,x,y,numberPaint);
+                float x, y;
+                if ( radius==50 ) {
+                    x = j * lineGap() + 2 * radius;
+                    y = i * lineGap() + 3 * radius;
+                } else {
+                    x = j * lineGap() + (float)1.25 * radius;
+                    y = i * lineGap() + (float)4.25 * radius;
+                }
+                if ( board.at(i,j)==-2 )
+                    canvas.drawText(" ",0,1,x,y,numberPaint);
+                else
+                    canvas.drawText(board.at(i,j)+" ",0,2,x,y,numberPaint);
             }
         }
     }

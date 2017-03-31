@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tile Numbers</string>
+    <string name="app_name">Slider Game</string>
     <string name="greeting">Click on the board to organize the numbers!</string>
     <string name="newGame">New Game</string>
     <string name="newGameDialog">Would you like to start a new game?</string>

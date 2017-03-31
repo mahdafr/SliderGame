@@ -1,3 +1,10 @@
+/*
+ * @author Mahdokht Afravi
+ * @created 03.30 R
+ *
+ * Provides the GUI view of the Slider Game.
+ */
+
 package edu.utep.cs.cs4330.slider;
 
 import android.content.DialogInterface;
@@ -20,22 +27,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        newGame();
+        //creating game
+        game = game.getGame();
         setup();
     }
-
-    /* Game operations: create and continue */
-    private void newGame() {
-        game = game.getGame();
-        setBoard();
-    }
-    private void continueGame() {
-        //TODO handle choosing no on creating a new game
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        game.rotated();
     }
 
     /* Move the blank space in the correct direction */
     private void move(int x, int y) {
-        if ( game.move(x,y) )
+        if ( game.move(y,x) )
             setBoard();
         else
             toast("Cannot move there.");
@@ -62,15 +66,28 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+    private void newGame() {
+        game.newGame();
+        setBoard();
+    }
+    private void continueGame() {
+        bv.addBoardTouchListener(new BoardView.BoardTouchListener() {
+            @Override
+            public void onTouch(int x, int y) {
+                toast("Start a new game to continue.");
+            }
+        });
+    }
     /* ResetButton clicked to scramble the Board */
     public void shuffleClicked(View v) {
         game.shuffleBoard();
+        setBoard();
     }
-
     /* Initializes the GUI elements */
     private void setup() {
         //BoardView
         bv = (BoardView) findViewById(R.id.boardView);
+        bv.setRadius(game.getRadius());
         setBoardListener();
         setBoard();
         //TextView
@@ -80,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         bv.addBoardTouchListener(new BoardView.BoardTouchListener() {
             @Override
             public void onTouch(int x, int y) {
-                toast(String.format("Touched: %d, %d", x, y));
+                //toast(String.format("Touched: %d, %d", x, y));
                 move(x,y);
             }
         });
