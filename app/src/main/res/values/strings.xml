@@ -2,5 +2,6 @@
     <string name="app_name">Slider Game</string>
     <string name="greeting">Click on the board to organize the numbers!</string>
     <string name="newGame">New Game</string>
-    <string name="newGameDialog">Would you like to start a new game?</string>
+    <string name="newGameDialog">Starting a new game loses current progress. Continue?</string>
+    <string name="gameOverDialog">You beat the game! Would you like to start a new one?</string>
 </resources>

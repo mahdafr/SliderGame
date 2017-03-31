@@ -39,30 +39,38 @@ public class MainActivity extends AppCompatActivity {
 
     /* Move the blank space in the correct direction */
     private void move(int x, int y) {
-        if ( game.move(y,x) )
+        if ( game.move(y,x) ) {
             setBoard();
-        else
+            if ( game.isOver() )
+                createDialog(2);
+        } else
             toast("Cannot move there.");
     }
 
     /* NewButton clicked to create new game */
     public void newClicked(View v) {
+        createDialog(1);
+    }
+    private void createDialog(int i) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(R.string.newGameDialog);
+        if ( i==1 )
+            alertDialogBuilder.setMessage(R.string.newGameDialog);
+        else
+            alertDialogBuilder.setMessage(R.string.gameOverDialog);
         alertDialogBuilder.setPositiveButton("Yes",
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface arg0, int arg1) {
-                    newGame();
-                }
-            });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        newGame();
+                    }
+                });
         alertDialogBuilder.setNegativeButton("No",
-            new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface arg0, int arg1) {
-                    continueGame();
-                }
-            });
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        continueGame();
+                    }
+                });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
@@ -71,11 +79,12 @@ public class MainActivity extends AppCompatActivity {
         setBoard();
     }
     private void continueGame() {
-        bv.addBoardTouchListener(new BoardView.BoardTouchListener() {
+        if ( game.isOver() )
+            bv.addBoardTouchListener(new BoardView.BoardTouchListener() {
             @Override
             public void onTouch(int x, int y) {
                 toast("Start a new game to continue.");
-            }
+                }
         });
     }
     /* ResetButton clicked to scramble the Board */
