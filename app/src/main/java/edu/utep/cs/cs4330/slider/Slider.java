@@ -30,6 +30,7 @@ public class Slider {
     public void newGame() {
         board = new Board(boardSize);
         board.setValues();
+        board.solve(); //@modified 04-06 R FOR DEMO PURPOSES ONLY
     }
 
     /* Mutators */

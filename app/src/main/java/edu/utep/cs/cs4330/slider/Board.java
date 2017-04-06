@@ -7,6 +7,8 @@
 
 package edu.utep.cs.cs4330.slider;
 
+import android.util.Log;
+
 public class Board {
     private int size;
     private Place[][] board;
@@ -122,12 +124,12 @@ public class Board {
     }
     private boolean checkWin() {
         //is last position empty?
-        if ( board[size-1][size-1].getValue()!=-2 )
+        if ( board[size-1][size-1].getValue()>=0 )
             return false;
-        int count = 1;
+        //int count = 1;
         for ( int i=0 ; i<size ; i++ )
             for ( int j=0 ; j<size ; j++ )
-                if ( board[i][j].getValue()!=(j%size)+(i*size) )
+                if ( board[i][j].getValue()!=(j%size)+(i*size)+1 && i!=size-1 && j!=size-1 )
                     return isOver = false;
                 //if ( board[i][j].getValue()!=count++ && i!=size-1 && j!=size-1 )
                     //return isOver = false;
@@ -143,5 +145,23 @@ public class Board {
     }
     public boolean isOver() {
         return isOver;
+    }
+
+
+
+    /*
+     * @author Mahdokht Afravi
+     * @created 04-06 R
+     * For demo purposes only.
+     */
+    public void solve() {
+        for ( int i=0 ; i<size ; i++ )
+            for ( int j=0 ; j<size ; j++ ) {
+                board[i][j] = new Place(i,j);
+                if ( i==size-1 && j==size-1 )
+                    board[i][j].setValue(-2);
+                else
+                    board[i][j].setValue((j%size)+(i*size)+1);
+            }
     }
 }
