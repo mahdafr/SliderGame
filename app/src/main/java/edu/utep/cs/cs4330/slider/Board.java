@@ -121,11 +121,16 @@ public class Board {
         setValues();
     }
     private boolean checkWin() {
+        //is last position empty?
+        if ( board[size-1][size-1].getValue()!=-2 )
+            return false;
         int count = 1;
         for ( int i=0 ; i<size ; i++ )
             for ( int j=0 ; j<size ; j++ )
-                if ( board[i][j].getValue()!=count++ )
+                if ( board[i][j].getValue()!=(j%size)+(i*size) )
                     return isOver = false;
+                //if ( board[i][j].getValue()!=count++ && i!=size-1 && j!=size-1 )
+                    //return isOver = false;
         return isOver = true;
     }
 

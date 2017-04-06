@@ -41,8 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private void move(int x, int y) {
         if ( game.move(y,x) ) {
             setBoard();
-            if ( game.isOver() )
+            if ( game.isOver() ) {
+                setText("Puzzle is complete. Start new game!");
                 createDialog(2);
+            }
         } else
             toast("Cannot move there.");
     }
